@@ -59,5 +59,5 @@ if __name__ == "__main__":
 		if sys.argv[1][-1] != '/':
 			pretty_print(sys.argv[1]+'/')
 		else:
-			prett_print(sys.argv[1])
+			pretty_print(sys.argv[1])
 

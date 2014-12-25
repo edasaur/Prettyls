@@ -19,8 +19,8 @@ Directories/files will be printed out in the following fashion:
 Implementation of flags have not been completed yet:
 
 - d[num] should be used as '-d5', in which case, the tool will perform a depth limited search of 5 levels
-- h should be used as '-h', in which case, teh tool will not ignore hidden files that begin with '.'
-
+- h should be used as '-h', in which case, the tool will not ignore hidden files that begin with '.'
+- s should be used as '-s', in which case, the tool will accept arguments to specify a different path than the current working directory
 
 
 More flags will possibly follow after the implementation of these two flags
