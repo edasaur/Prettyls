@@ -11,19 +11,21 @@ def is_directory(directory): #probably not the best way to indicate not a direct
 	
 def pretty_print(input_dir):
 	stack = [(input_dir, 1),]
-	print input_dir
-	while stack not empty:
-		directory = stack[-1]
+	while stack:
+		directory, level = stack[-1]
+		if directory[-1] != "/":
+			directory += "/"
 		stack = stack[0:-1]
-		for filename in os.listdir(directory[0]):
+		print "-"*2*(level-1)+str(directory)
+		print "|"
+		for filename in os.listdir(directory):
 			if filename[0] == '.': #skip hidden directories
 				pass
-			elif is_directory(filename):
-				stack.append((filename, directory[1]+1))
+			elif is_directory(directory+filename):
+				stack.append((directory+filename, level+1))
 			else:
-				print "-"*2*directory[1] + str(filename)	
-		
-				
+				print "-"*2*level + str(filename)	
+				print "|"	
 		
 if __name__ == "__main__":
 	print "This is the first argument: "+str(sys.argv[0])
