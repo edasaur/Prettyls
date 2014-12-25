@@ -26,7 +26,7 @@ def pretty_print(input_dir):
 		if directory[1][-1] != "/":
 			directory[1] += "/"
 		stack = stack[0:-1]
-		print "|"+"-"*2*(level-1)+str(directory[1])
+		print "|"+"-"*4*(level-1)+str(directory[1])
 		print "|"
 		for filename in os.listdir(directory[0]+'/'+directory[1]):
 			if filename[0] == '.': #skip hidden directories
@@ -34,11 +34,10 @@ def pretty_print(input_dir):
 			elif is_directory(directory[0]+"/"+directory[1]+filename):
 				stack.append((strip(directory[0]+"/"+directory[1]+filename+"/"), level+1))
 			else:
-				print "|"+"-"*2*level + str(filename)	
+				print "|"+"-"*4*level + str(filename)	
 				print "|"	
 		
 if __name__ == "__main__":
-	print "This is the first argument: "+str(sys.argv[0])
 	if sys.argv[1] == 'help':
 		print "This will be the help section, sort of like a man page!"		
 	elif sys.argv[1][0] == '-':
