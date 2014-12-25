@@ -1,9 +1,16 @@
 import os, sys, string
 
 flags_dict = {'d':False} #-d means depth-limited
+def join(list_str,join_char):
+	result = ""
+	for item in list_str:
+		result += item + "/"
+	return 	result[0:-1]
+
 def strip(path):
-	path = string.split(path, '/')
-		
+	path_dirs = string.split(path, '/')
+	parent_path, fold_name = join(path_dirs[0:-2],'/'), join(path_dirs[-2::],'/')
+	return [parent_path, fold_name]
 
 def is_directory(directory): #probably not the best way to figure out whether a directory or not
 	try:
@@ -13,21 +20,21 @@ def is_directory(directory): #probably not the best way to figure out whether a 
 	return True
 	
 def pretty_print(input_dir):
-	stack = [(input_dir, 1),]
+	stack = [(strip(input_dir), 1),]
 	while stack:
 		directory, level = stack[-1]
-		if directory[-1] != "/":
-			directory += "/"
+		if directory[1][-1] != "/":
+			directory[1] += "/"
 		stack = stack[0:-1]
-		print "-"*2*(level-1)+str(directory)
+		print "|"+"-"*2*(level-1)+str(directory[1])
 		print "|"
-		for filename in os.listdir(directory):
+		for filename in os.listdir(directory[0]+'/'+directory[1]):
 			if filename[0] == '.': #skip hidden directories
 				pass
-			elif is_directory(directory+filename):
-				stack.append((directory+filename, level+1))
+			elif is_directory(directory[0]+"/"+directory[1]+filename):
+				stack.append((strip(directory[0]+"/"+directory[1]+filename+"/"), level+1))
 			else:
-				print "-"*2*level + str(filename)	
+				print "|"+"-"*2*level + str(filename)	
 				print "|"	
 		
 if __name__ == "__main__":
@@ -45,7 +52,13 @@ if __name__ == "__main__":
 					raise SyntaxError('Unknown letter identifier')
 			else:
 				flags_dict[flag] = True
-		pretty_print(sys.argv[2])
+		if sys.argv[2][-1] != '/':
+			pretty_print(sys.argv[2]+'/')
+		else:
+			pretty_print(sys.argv[2])
 	else:
-		pretty_print(sys.argv[1])
+		if sys.argv[1][-1] != '/':
+			pretty_print(sys.argv[1]+'/')
+		else:
+			prett_print(sys.argv[1])
 
