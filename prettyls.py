@@ -1,8 +1,11 @@
-import os, sys
+import os, sys, string
 
 flags_dict = {'d':False} #-d means depth-limited
+def strip(path):
+	path = string.split(path, '/')
+		
 
-def is_directory(directory): #probably not the best way to indicate not a directory
+def is_directory(directory): #probably not the best way to figure out whether a directory or not
 	try:
 		os.listdir(directory)
 	except OSError as e:
