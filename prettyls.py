@@ -1,6 +1,6 @@
 import os, sys, string
 
-flags_dict = {'d':False} #-d means depth-limited
+flags_dict = {'d':False, 'h':False, 's':False} #-d means depth-limited
 def join(list_str,join_char):
 	result = ""
 	for item in list_str:
@@ -29,8 +29,10 @@ def pretty_print(input_dir):
 		print "|"+"-"*4*(level-1)+str(directory[1])
 		print "|"
 		for filename in os.listdir(directory[0]+'/'+directory[1]):
-			if filename[0] == '.': #skip hidden directories
-				pass
+			if level == flags_dict['d']:
+				continue
+			if not flags_dict['h'] and filename[0] == '.': #skip hidden directories
+				continue
 			elif is_directory(directory[0]+"/"+directory[1]+filename):
 				stack.append((strip(directory[0]+"/"+directory[1]+filename+"/"), level+1))
 			else:
@@ -40,15 +42,20 @@ def pretty_print(input_dir):
 if __name__ == "__main__":
 	if sys.argv[1] == 'help':
 		print "This will be the help section, sort of like a man page!"		
-	elif sys.argv[1][0] == '-':
+	elif sys.argv[1][0] == '-': #read through specified tags
 		for flag in sys.argv[1][1::]:
-			if flag not in flags_dict:
-				raise SyntaxError('Flag not set')
-			elif type(flag) == int:
-				if flags_dict['d'] == True:
-					flags_dict['d'] = flag
+			print flags_dict['d']
+			try:
+				int_flag = int(flag)
+				if flags_dict['d']:
+					flags_dict['d'] = int_flag
 				else:
 					raise SyntaxError('Unknown letter identifier')
+				continue
+			except ValueError:
+				pass
+			if flag not in flags_dict:
+				raise SyntaxError('Flag not set')
 			else:
 				flags_dict[flag] = True
 		if sys.argv[2][-1] != '/':
@@ -60,4 +67,3 @@ if __name__ == "__main__":
 			pretty_print(sys.argv[1]+'/')
 		else:
 			pretty_print(sys.argv[1])
-
