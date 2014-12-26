@@ -40,11 +40,10 @@ def pretty_print(input_dir):
 				print "|"	
 		
 if __name__ == "__main__":
-	if sys.argv[1] == 'help':
+	if len(sys.argv) > 1 and sys.argv[1] == 'help':
 		print "This will be the help section, sort of like a man page!"		
-	elif sys.argv[1][0] == '-': #read through specified tags
+	elif len(sys.argv) > 1 and sys.argv[1][0] == '-': #read through specified tags
 		for flag in sys.argv[1][1::]:
-			print flags_dict['d']
 			try:
 				int_flag = int(flag)
 				if flags_dict['d']:
@@ -58,12 +57,13 @@ if __name__ == "__main__":
 				raise SyntaxError('Flag not set')
 			else:
 				flags_dict[flag] = True
-		if sys.argv[2][-1] != '/':
-			pretty_print(sys.argv[2]+'/')
+		print flags_dict['s']
+		if flags_dict['s']:
+			if sys.argv[2][-1] != '/':
+				pretty_print(sys.argv[2]+'/')
+			else:
+				pretty_print(sys.argv[2])
 		else:
-			pretty_print(sys.argv[2])
+			pretty_print(os.getcwd())
 	else:
-		if sys.argv[1][-1] != '/':
-			pretty_print(sys.argv[1]+'/')
-		else:
-			pretty_print(sys.argv[1])
+		pretty_print(os.getcwd())

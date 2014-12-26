@@ -3,7 +3,7 @@ Prettyls
 Lightweight tool to pretty print the directory names recursively
 
 Directories/files will be printed out in the following fashion:
-
+```
 |-base_directory/
 |
 |----base.txt
@@ -13,7 +13,7 @@ Directories/files will be printed out in the following fashion:
 |--------outer_directory_file.txt
 |
 |----outer_directory2/
-
+```
 
 
 Implementation of flags have not been completed yet:
