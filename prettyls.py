@@ -57,7 +57,7 @@ if __name__ == "__main__":
 				raise SyntaxError('Flag not set')
 			else:
 				flags_dict[flag] = True
-		print flags_dict['s']
+		#print flags_dict['s']
 		if flags_dict['s']:
 			if sys.argv[2][-1] != '/':
 				pretty_print(sys.argv[2]+'/')
